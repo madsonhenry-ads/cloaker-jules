@@ -1,15 +1,15 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const config = require('./config');
 const fs = require('fs');
 const path = require('path');
-const { initDb, insertCaptureRecord } = require('./utils/database'); // Import DB functions
+const minimist = require('minimist'); // For parsing command-line arguments
+const { initDb, insertCaptureRecord } = require('./utils/database');
+const importedConfig = require('./config'); // Renamed to avoid conflict with 'config' variable
 
 puppeteer.use(StealthPlugin());
 
 const logsDir = './logs';
 const screenshotsDir = path.join(logsDir, 'screenshots');
-const htmlFilePrefix = 'page_'; // Prefix for unique HTML files
 const jsonLogPath = path.join(logsDir, 'page_logs.json');
 
 if (!fs.existsSync(logsDir)) {
@@ -20,7 +20,6 @@ if (!fs.existsSync(screenshotsDir)) {
 }
 
 function appendToJsonLog(logEntry) {
-  // ... (keep existing appendToJsonLog function as is)
   let logs = [];
   if (fs.existsSync(jsonLogPath)) {
     try {
@@ -28,12 +27,10 @@ function appendToJsonLog(logEntry) {
       if (existingLogs.trim() !== "") {
         logs = JSON.parse(existingLogs);
         if (!Array.isArray(logs)) {
-          console.warn('page_logs.json does not contain a valid JSON array. Initializing with new array.');
           logs = [];
         }
       }
     } catch (e) {
-      console.warn(`Error reading or parsing page_logs.json: ${e.message}. Initializing with new array.`);
       logs = [];
     }
   }
@@ -51,23 +48,44 @@ function generateTimestampedFilename(url, prefix, extension) {
 }
 
 (async () => {
-  await initDb(); // Initialize database connection early
+  await initDb();
 
-  const targetUrl = process.argv[2];
+  // Parse command line arguments
+  // Expected format: node index.js --url <target_url> [--proxy <proxy_url>] [--userAgent <user_agent_string>] [--referer <referer_url>]
+  // Or for backward compatibility: node index.js <target_url> (though --url is preferred)
+  const argv = minimist(process.argv.slice(2));
 
-  // Generate unique filenames for this run for HTML and Screenshot
+  const targetUrl = argv.url || argv._[0]; // Allow --url or first positional argument
+  const cliProxy = argv.proxy;
+  const cliUserAgent = argv.userAgent;
+  const cliReferer = argv.referer;
+
+  // Determine effective config, CLI args override config.js
+  const effectiveConfig = {
+    proxy: cliProxy !== undefined ? cliProxy : importedConfig.proxy,
+    userAgent: cliUserAgent !== undefined ? cliUserAgent : importedConfig.userAgent,
+    referer: cliReferer !== undefined ? cliReferer : importedConfig.referer,
+    timeout: importedConfig.timeout || 60000 // Timeout from config.js or default
+  };
+
+  // Ensure proxy is null if empty string is passed, so it's not used
+  if (effectiveConfig.proxy === "") {
+    effectiveConfig.proxy = null;
+  }
+
+
   const currentHtmlFilename = generateTimestampedFilename(targetUrl, 'page_', 'html');
   const currentHtmlPath = path.join(logsDir, currentHtmlFilename);
   const currentScreenshotFilename = generateTimestampedFilename(targetUrl, 'screenshot_', 'png');
   const currentScreenshotPath = path.join(screenshotsDir, currentScreenshotFilename);
 
-
   if (!targetUrl) {
     console.error("Erro: URL alvo não fornecida.");
-    console.log("Uso: node index.js <URL_ALVO>");
+    console.log("Uso: node index.js --url <URL_ALVO> [--proxy PROXY_URL] [--userAgent UA_STRING] [--referer REFERER_URL]");
     const errorLogEntry = {
       timestamp: new Date().toISOString(), url: 'N/A', status: 'failure',
-      proxy_used: config.proxy || 'N/A', error_message: 'URL alvo não fornecida na linha de comando.',
+      proxy_used: effectiveConfig.proxy || 'N/A',
+      error_message: 'URL alvo não fornecida.',
       html_content_path: null, screenshot_path: null
     };
     appendToJsonLog(errorLogEntry);
@@ -76,43 +94,43 @@ function generateTimestampedFilename(url, prefix, extension) {
   }
 
   console.log(`Iniciando captura para URL: ${targetUrl}`);
+  console.log(`Usando config: Proxy: ${effectiveConfig.proxy || 'Nenhum'}, User-Agent: ${effectiveConfig.userAgent}, Referer: ${effectiveConfig.referer}`);
 
   const logEntry = {
     timestamp: new Date().toISOString(),
     url: targetUrl,
     status: 'pending',
-    proxy_used: config.proxy || 'N/A',
+    proxy_used: effectiveConfig.proxy || 'none',
     error_message: null,
-    html_content_path: null, // Will be set on success
-    screenshot_path: null // Will be set on success
+    html_content_path: null,
+    screenshot_path: null
   };
 
   const browserArgs = ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--single-process'];
-  if (config.proxy) {
-    browserArgs.push(`--proxy-server=\${config.proxy}`);
+  if (effectiveConfig.proxy) {
+    browserArgs.push(`--proxy-server=\${effectiveConfig.proxy}`);
   } else {
-    console.warn("Atenção: Proxy não configurado em config.js. Acessando diretamente.");
-    logEntry.proxy_used = 'none';
+    console.warn("Atenção: Proxy não configurado ou fornecido como vazio. Acessando diretamente.");
   }
 
   let browser;
   try {
     browser = await puppeteer.launch({ headless: true, args: browserArgs });
     const page = await browser.newPage();
-    await page.setUserAgent(config.userAgent);
-    await page.setExtraHTTPHeaders({ 'referer': config.referer });
+    await page.setUserAgent(effectiveConfig.userAgent);
+    await page.setExtraHTTPHeaders({ 'referer': effectiveConfig.referer });
 
     console.log(`Navegando para ${targetUrl}...`);
-    await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: config.timeout || 60000 });
+    await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: effectiveConfig.timeout });
     console.log('Navigation successful.');
 
     const content = await page.content();
-    fs.writeFileSync(currentHtmlPath, content); // Save to unique HTML file
-    logEntry.html_content_path = currentHtmlPath; // Log the path to this unique HTML file
+    fs.writeFileSync(currentHtmlPath, content);
+    logEntry.html_content_path = currentHtmlPath;
     console.log(`Página HTML capturada com sucesso em ${currentHtmlPath}`);
 
     await page.screenshot({ path: currentScreenshotPath, fullPage: true });
-    logEntry.screenshot_path = currentScreenshotPath; // Log the path to this unique screenshot
+    logEntry.screenshot_path = currentScreenshotPath;
     console.log(`Screenshot capturado com sucesso em ${currentScreenshotPath}`);
 
     logEntry.status = 'success';
@@ -121,15 +139,14 @@ function generateTimestampedFilename(url, prefix, extension) {
     console.error(`Erro durante execução do Puppeteer para ${targetUrl}: ${error.message}`);
     logEntry.status = 'failure';
     logEntry.error_message = error.message;
-    // html_content_path and screenshot_path remain null or previous value
   } finally {
     if (browser) {
       await browser.close();
       console.log('Navegador fechado.');
     }
-    appendToJsonLog(logEntry); // Still log to JSON file
+    appendToJsonLog(logEntry);
     try {
-      await insertCaptureRecord(logEntry); // Also log to SQLite DB
+      await insertCaptureRecord(logEntry);
       console.log('Registro da captura salvo no banco de dados.');
     } catch (dbError) {
       console.error('Falha ao salvar registro no banco de dados:', dbError.message);

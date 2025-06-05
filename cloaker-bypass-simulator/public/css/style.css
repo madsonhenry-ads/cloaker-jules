@@ -1,0 +1,473 @@
+/* Basic Reset & Defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.6;
+    background-color: #ffffff; /* White background */
+    color: #333333; /* Dark gray text */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 20px; /* Space for header */
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    padding: 20px 15px;
+    border-bottom: 1px solid #e0e0e0; /* Light gray border */
+    background-color: #f8f9fa; /* Very light gray for header bg */
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #0d6efd; /* Solid blue for main title */
+    margin-bottom: 0.25em;
+}
+
+header .subtitle {
+    font-size: 1rem;
+    color: #555555; /* Medium gray for subtitle */
+    margin-bottom: 0;
+}
+
+/* Main Content Area */
+main {
+    flex: 1; /* Takes up remaining vertical space */
+    padding: 20px 15px;
+    width: 100%;
+    max-width: 1200px; /* Max width for content */
+    margin: 0 auto; /* Center content */
+}
+
+/* Section Styling (General - can be overridden) */
+section {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.075);
+}
+
+section h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 10px;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #343a40; /* Dark background for footer */
+    color: #f8f9fa; /* Light text for footer */
+    padding: 20px 15px;
+    text-align: center;
+    font-size: 0.875rem;
+    border-top: 1px solid #495057;
+}
+
+footer .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+footer .project-name,
+footer .footer-center,
+footer .footer-purpose {
+    padding: 5px 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.75rem;
+    }
+    header .subtitle {
+        font-size: 0.9rem;
+    }
+    footer .footer-content {
+        flex-direction: column;
+    }
+    footer .footer-center {
+        order: 1; /* Center copyright in mobile */
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+     footer .project-name {
+        order: 2;
+    }
+    footer .footer-purpose {
+        order: 3;
+    }
+}
+
+/* Utility classes (can be expanded) */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+/* Placeholder for where sections will go - for structure */
+#ethical-warning-section,
+#new-simulation-section,
+#simulation-result-section,
+#simulation-history-section {
+    margin-bottom: 30px; /* Space between major sections */
+}
+
+/* Ethical Warning Section Styling */
+.ethical-warning {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text for contrast */
+    padding: 15px 20px;
+    margin-bottom: 25px; /* Keep space as it's a major section */
+    border: 1px solid #f5c6cb; /* Slightly darker red border */
+    border-radius: 8px; /* Consistent with other sections */
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+
+.ethical-warning .warning-icon {
+    font-size: 1.8rem; /* Larger icon */
+    margin-right: 15px;
+    line-height: 1; /* Align icon better */
+}
+
+.ethical-warning .warning-content h2 {
+    font-size: 1.25rem; /* Slightly smaller than main section titles */
+    color: #721c24; /* Dark red title */
+    margin-bottom: 8px;
+    border-bottom: none; /* No border for this specific h2 */
+    padding-bottom: 0;
+}
+
+.ethical-warning .warning-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 0; /* No bottom margin for the paragraph inside */
+}
+
+/* Adjusting main section placeholder selector, as it's now a class */
+.ethical-warning, /* It's a section itself, so this is redundant but harmless */
+#new-simulation-section,
+#simulation-result-section,
+#simulation-history-section {
+    margin-bottom: 30px; /* Space between major sections */
+}
+
+/* New Simulation Section Styling */
+#new-simulation-section {
+    /* Uses general section styling from before */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input[type="url"],
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da; /* Light gray border */
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-group input[type="url"]:focus,
+.form-group input[type="text"]:focus {
+    border-color: #0d6efd; /* Blue border on focus */
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25); /* Blue shadow on focus */
+}
+
+.advanced-options-toggle {
+    background-color: transparent;
+    color: #0d6efd;
+    border: none;
+    padding: 8px 0;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-align: left;
+}
+.advanced-options-toggle:hover {
+    text-decoration: underline;
+}
+
+.advanced-options-content {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa; /* Slightly off-white for advanced options bg */
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.375rem; /* 6px */
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #0d6efd; /* Solid blue */
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.btn-full-width {
+    display: block;
+    width: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 1.1rem;
+}
+
+.feedback-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    text-align: center;
+}
+.feedback-message.success {
+    background-color: #d1e7dd; /* Light green */
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
+.feedback-message.error {
+    background-color: #f8d7da; /* Light red */
+    color: #842029;
+    border: 1px solid #f5c2c7;
+}
+
+/* Simulation Result Section & Tabs Styling */
+#simulation-result-section {
+    /* Uses general section styling */
+}
+
+.tabs {
+    border: 1px solid #e0e0e0; /* Light gray border around tabs container */
+    border-radius: 6px;
+    background-color: #ffffff;
+    overflow: hidden; /* Contain floats or absolutely positioned elements if any */
+}
+
+.tab-nav {
+    display: flex;
+    background-color: #f8f9fa; /* Very light gray for tab navigation background */
+    border-bottom: 1px solid #dee2e6; /* Standard bootstrap-like border color */
+}
+
+.tab-link {
+    padding: 12px 18px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0d6efd; /* Blue for tab links */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-right: 1px solid #dee2e6; /* Separator */
+}
+
+.tab-link:last-child {
+    border-right: none;
+}
+
+.tab-link:hover {
+    background-color: #e9ecef; /* Light hover effect */
+}
+
+.tab-link.active {
+    background-color: #ffffff; /* White background for active tab */
+    color: #333333; /* Darker text for active tab */
+    border-bottom: 2px solid #0d6efd; /* Blue underline for active tab */
+    margin-bottom: -1px; /* Pull active tab content border up */
+}
+
+.tab-content {
+    padding: 20px;
+    display: none; /* Hide all tab contents by default */
+    border-top: none; /* No top border as .tabs or .tab-nav handles it */
+    min-height: 200px; /* Give some default height */
+    background-color: #fff;
+}
+
+.tab-content.active {
+    display: block; /* Show active tab content */
+}
+
+/* Styling for placeholder content within tabs (can be removed later) */
+.tab-content p:first-child {
+    margin-bottom: 15px;
+    font-style: italic;
+    color: #777;
+}
+
+#source-code-content {
+    display: block;
+    background-color: #282c34; /* Dark background for code */
+    color: #abb2bf; /* Light text for code */
+    padding: 15px;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.875em;
+    white-space: pre-wrap;       /* Preserve newlines and spaces */
+    word-wrap: break-word;       /* Break long lines */
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#simulation-details-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+#simulation-details-content li {
+    padding: 5px 0;
+    border-bottom: 1px dotted #eee;
+}
+#simulation-details-content li strong {
+    display: inline-block;
+    min-width: 120px;
+    color: #555;
+}
+
+/* Simulation History Section & Table Styling */
+#simulation-history-section {
+    /* Uses general section styling */
+}
+
+.table-responsive {
+    overflow-x: auto; /* Allow horizontal scrolling on small screens */
+    margin-bottom: 20px;
+}
+
+#history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background-color: #fff;
+}
+
+#history-table th,
+#history-table td {
+    border: 1px solid #dee2e6; /* Light gray border for cells */
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+#history-table thead th {
+    background-color: #f8f9fa; /* Very light gray for table header */
+    font-weight: 600; /* Slightly bolder header text */
+    color: #333;
+}
+
+#history-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Zebra striping for rows */
+}
+
+#history-table tbody tr:hover {
+    background-color: #f1f1f1; /* Hover effect for rows */
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px; /* Pill shape */
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-success {
+    background-color: #198754; /* Green for success */
+}
+
+.status-failure {
+    background-color: #dc3545; /* Red for failure */
+}
+
+.status-pending {
+    background-color: #ffc107; /* Yellow for pending */
+    color: #333;
+}
+
+.action-icon {
+    cursor: pointer;
+    font-size: 1.2rem; /* Make icon slightly larger */
+    color: #0d6efd; /* Blue for action icon */
+    text-decoration: none;
+}
+.action-icon:hover {
+    color: #0b5ed7; /* Darker blue on hover */
+}
+
+/* Pagination Controls */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.pagination-controls button {
+    margin: 0 10px;
+    padding: 8px 15px; /* Consistent with .btn but can be specific */
+}
+.btn-secondary { /* Define if not already defined or refine */
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+.btn:disabled { /* Style for disabled pagination buttons */
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+#page-info {
+    font-size: 0.95rem;
+    color: #555;
+}

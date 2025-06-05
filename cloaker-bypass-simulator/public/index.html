@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Bypass de Cloaker</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Using a Google Font as an example for modern typography - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Simulador de Bypass de Cloaker</h1>
+        <p class="subtitle">Simule o ambiente de um usuário legítimo acessando links de anúncios</p>
+    </header>
+
+    <main>
+        <!-- Sections will be added here in subsequent steps -->
+        <section id="ethical-warning-section" class="ethical-warning">
+    <div class="warning-icon">⚠️</div>
+    <div class="warning-content">
+        <h2>Aviso de Uso Ético</h2>
+        <p>Esta ferramenta tem finalidade exclusivamente para fins educacionais, de auditoria e pesquisa de segurança. O uso indevido pode violar leis locais e políticas de privacidade de plataformas.</p>
+    </div>
+</section>
+
+        <section id="new-simulation-section">
+    <h2>Nova Simulação</h2>
+    <form id="new-simulation-form">
+        <div class="form-group">
+            <label for="targetUrl">URL Alvo</label>
+            <input type="url" id="targetUrl" name="targetUrl" placeholder="Insira a URL completa que deseja simular" required>
+        </div>
+
+        <button type="button" id="toggle-advanced-options" class="advanced-options-toggle">Opções Avançadas ▼</button>
+        <div id="advanced-options" class="advanced-options-content" style="display: none;">
+            <div class="form-group">
+                <label for="proxy">Proxy (opcional)</label>
+                <input type="text" id="proxy" name="proxy" placeholder="http://usuario:senha@proxy.exemplo.com:porta">
+            </div>
+            <div class="form-group">
+                <label for="userAgent">User-Agent (opcional)</label>
+                <input type="text" id="userAgent" name="userAgent" placeholder="Valor padrão: Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X)...">
+            </div>
+            <div class="form-group">
+                <label for="referer">Referer (opcional)</label>
+                <input type="text" id="referer" name="referer" placeholder="Valor padrão: https://www.facebook.com/">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full-width">▶ Iniciar Simulação</button>
+    </form>
+    <div id="simulation-feedback" class="feedback-message" style="display: none;"></div>
+</section>
+
+        <section id="simulation-result-section">
+    <h2>Resultado da Simulação</h2>
+    <div class="tabs">
+        <div class="tab-nav">
+            <button class="tab-link active" data-tab="visualizacao-tab">Visualização</button>
+            <button class="tab-link" data-tab="codigo-fonte-tab">Código-fonte</button>
+            <button class="tab-link" data-tab="screenshot-tab">Screenshot</button>
+            <button class="tab-link" data-tab="informacoes-tab">Informações</button>
+        </div>
+        <div id="visualizacao-tab" class="tab-content active">
+            <p>Conteúdo da Visualização aparecerá aqui...</p>
+            <!-- Specific content for this tab will be added in Step 10 -->
+        </div>
+        <div id="codigo-fonte-tab" class="tab-content">
+            <p>Conteúdo do Código-fonte aparecerá aqui...</p>
+            <!-- Specific content for this tab will be added in Step 10 -->
+            <pre><code id="source-code-content"></code></pre>
+        </div>
+        <div id="screenshot-tab" class="tab-content">
+            <p>Screenshot aparecerá aqui...</p>
+            <!-- Specific content for this tab will be added in Step 10 -->
+            <img id="screenshot-image" src="#" alt="Screenshot da Simulação" style="display:none; max-width: 100%; height: auto; border: 1px solid #ccc;"/>
+        </div>
+        <div id="informacoes-tab" class="tab-content">
+            <p>Informações da Simulação aparecerão aqui...</p>
+            <!-- Specific content for this tab will be added in Step 10 -->
+            <div id="simulation-details-content"></div>
+        </div>
+    </div>
+</section>
+
+        <section id="simulation-history-section">
+    <h2>Histórico de Simulações</h2>
+    <div class="table-responsive">
+        <table id="history-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>URL Alvo</th>
+                    <th>Status</th>
+                    <th>Data/Hora</th>
+                    <!-- <th>Duração</th> Omit for now as not logged -->
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="history-table-body">
+                <!-- Rows will be populated by JavaScript -->
+                <tr><td colspan="5" style="text-align:center;">Carregando histórico...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="pagination-controls" class="pagination-controls">
+        <button id="prev-page" class="btn btn-secondary">Anterior</button>
+        <span id="page-info">Página 1 de 1</span>
+        <button id="next-page" class="btn btn-secondary">Próximo</button>
+    </div>
+</section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <span class="project-name">Simulador de Bypass de Cloaker</span>
+            <span class="footer-center">© 2024 – Todos os direitos reservados.</span> <!-- Year updated -->
+            <span class="footer-purpose">Ferramenta para fins educacionais e de pesquisa de segurança.</span>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script> <!-- Main JS file for interactivity -->
+</body>
+</html>
