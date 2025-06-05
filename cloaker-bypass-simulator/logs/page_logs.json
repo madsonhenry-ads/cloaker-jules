@@ -1,0 +1,29 @@
+[
+  {
+    "timestamp": "2025-06-05T13:49:55.055Z",
+    "url": "http://example.com",
+    "status": "failure",
+    "proxy_used": "http://user:pass@residential-proxy.com:port",
+    "error_message": "net::ERR_BLOCKED_BY_CLIENT at http://example.com",
+    "html_path": "logs/page.html",
+    "screenshot_path": null
+  },
+  {
+    "timestamp": "2025-06-05T13:51:53.906Z",
+    "url": "http://example.com",
+    "status": "failure",
+    "proxy_used": "http://user:pass@residential-proxy.com:port",
+    "error_message": "net::ERR_BLOCKED_BY_CLIENT at http://example.com",
+    "html_path": "logs/page.html",
+    "screenshot_path": null
+  },
+  {
+    "timestamp": "2025-06-05T13:55:32.395Z",
+    "url": "http://example.com",
+    "status": "failure",
+    "proxy_used": "http://user:pass@residential-proxy.com:port",
+    "error_message": "net::ERR_BLOCKED_BY_CLIENT at http://example.com",
+    "html_content_path": null,
+    "screenshot_path": null
+  }
+]

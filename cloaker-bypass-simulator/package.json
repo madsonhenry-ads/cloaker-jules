@@ -1,0 +1,18 @@
+{
+  "name": "cloaker-bypass-simulator",
+  "version": "1.0.0",
+  "description": "Este projeto tem como objetivo simular o ambiente real de um usuário legítimo clicando em anúncios (ex: Facebook Ads), com o intuito de acessar a página real de vendas escondida por sistemas de cloaking.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^24.10.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sqlite3": "^5.1.7"
+  }
+}
